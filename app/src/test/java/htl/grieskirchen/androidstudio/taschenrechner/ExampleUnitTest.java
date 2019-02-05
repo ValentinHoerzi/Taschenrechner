@@ -17,35 +17,52 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void testPostfix1() {
-        List<String> exp = Arrays.asList("2","2","+");
-        List<String> result = PostfixUtil.infixToPostfix(Arrays.asList("2", "+", "2"));
+        List<String> exp = Arrays.asList("1", "1", "*","1","+");
+        List<String> result = PostfixUtil.infixToPostfix(Arrays.asList("1","*","1","+","1"));
         assertEquals(exp,result);
     }
 
     @Test
     public void testPostfix2() {
-        List<String> exp = Arrays.asList("2","2","+");
-        List<String> result = PostfixUtil.infixToPostfix(Arrays.asList("2", "+", "2"));
+        List<String> exp = Arrays.asList("1", "1", "1","*","+");
+        List<String> result = PostfixUtil.infixToPostfix(Arrays.asList("1","+","1","*","1"));
         assertEquals(exp,result);
     }
 
     @Test
     public void testPostfix3() {
-        List<String> exp = Arrays.asList("2","2","+");
-        List<String> result = PostfixUtil.infixToPostfix(Arrays.asList("2", "+", "2"));
+        List<String> exp = Arrays.asList("1", "1", "1","+","*");
+        List<String> result = PostfixUtil.infixToPostfix(Arrays.asList("1","*","(","1","+","1",")"));
         assertEquals(exp,result);
     }
 
     @Test
+    public void testPostfix4() {
+        List<String> exp = Arrays.asList("1", "1", "-","1","+");
+        List<String> result = PostfixUtil.infixToPostfix(Arrays.asList("1","-","1","+","1"));
+        assertEquals(exp,result);
+    }
+
+    @Test
+    public void testPostfix5() {
+        List<String> exp = Arrays.asList("1", "1", "1","1","*","+","*","1","+");
+        List<String> result = PostfixUtil.infixToPostfix(Arrays.asList("1","*","(","1","+","1","*","1",")","+","1"));
+        assertEquals(exp,result);
+    }
+
+
+    @Test
     public void textCalc1(){
-        BigDecimal exp = new BigDecimal(12);
-        List<String> result = Arrays.asList("2", "2", "+");
-        assertEquals(exp, result);
+        BigDecimal exp = new BigDecimal(7);
+        BigDecimal result = PostfixUtil.evaluate(Arrays.asList("2", "2", "*","3","+"));
+        assertEquals(exp,result);
     }
 
     @Test
     public void textCalc2(){
-
+        BigDecimal exp = new BigDecimal(8);
+        BigDecimal result = PostfixUtil.evaluate(Arrays.asList("2", "2", "3","*","+"));
+        assertEquals(exp,result);
     }
 
     @Test
@@ -55,6 +72,11 @@ public class ExampleUnitTest {
 
     @Test
     public void textCalc4(){
+
+    }
+
+    @Test
+    public void textCalc5(){
 
     }
 }
