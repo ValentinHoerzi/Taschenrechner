@@ -24,8 +24,8 @@ public class PostfixUtil {
                 operators.push(token);
                 if(token.equals(")")){
                     String pop = operators.pop();
-                    while(pop != "("){
-                        if(pop!=")"){
+                    while(!pop.equals("(")){
+                        if(!pop.equals(")")){
                             postfix.add(pop);
                         }
                         pop = operators.pop();
@@ -40,14 +40,19 @@ public class PostfixUtil {
     }
 
     private static int getPrecedence(String token){
-        return (token.equals("+") || token.equals("-") ? 1 : 2);
+        if(token.equals("+") || token.equals("-")){
+            return 1;
+        }else if(token.equals("*") || token.equals("/")){
+            return 2;
+        }
+        return 3;
     }
 
-    private static boolean isOperator(String token){
-        return token == "+" || token =="-" || token=="/" || token=="*" || token=="("||token==")";
+    public static boolean isOperator(String token){
+        return token.equals("+") || token.equals("-") || token.equals("/") || token.equals("*") || token.equals("(") || token.equals(")") ;
     }
 
-    private static boolean isNumber(String token) {
+    public static boolean isNumber(String token) {
        try{
            Double.parseDouble(token);
        }catch(Exception r){
@@ -62,12 +67,10 @@ public class PostfixUtil {
             if(isNumber(token)){
                 numberStack.push(token);
             }else{
-                while(numberStack.size() >1){
                     String right_operant = numberStack.pop();
                     String left_operant = numberStack.pop();
                     BigDecimal left_bigD = new BigDecimal(left_operant);
                     BigDecimal right_bigD = new BigDecimal(right_operant);
-
                     switch (token){
                         case "+":
                             numberStack.push(left_bigD.add(right_bigD).toString());
@@ -82,7 +85,6 @@ public class PostfixUtil {
                             numberStack.push(left_bigD.divide(right_bigD).toString());
                             break;
                     }
-                }
             }
         }
         return new BigDecimal(numberStack.pop());
@@ -95,24 +97,4 @@ public class PostfixUtil {
       minus zahlen in klammer
       Max lösung zu ungültige eingabe -> schauen, ob der nutzer 2 operanten hintereinander eingegeben hat
       ^[1-9]+\.?[0-9]*$ -> kontrolliert ob es eine gültige zahl ist
-
-
-             List<String> out = new ArrayList<>();
-        for (int i = 0; i < infix.size(); i++) {
-            String token = infix.get(i);
-            if(isNumber(token)){
-                out.add(token);
-            }
-            if(isOperator(token)){
-                whlie (pop-operator > operator)
-                        pop-operator -> out
-                      push operator
-                      if(token = "(" push "(")
-                          if token ")"
-                    while !"(" pop -> out
-
-
-                   while !stack.empty pop -> out
-            }
-        }
  */
